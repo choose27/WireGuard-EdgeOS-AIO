@@ -39,6 +39,10 @@ wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.publi
 sudo apt-get update
 sudo apt-get install qrencode -y
 
+## Grab uninstaller
+curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
+chmod a+x /config/WireGuardAIO/wgun.sh
+
 ## Prep the automatic peer configuration
 curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
