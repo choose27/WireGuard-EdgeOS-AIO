@@ -47,7 +47,6 @@ chmod a+x /config/WireGuardAIO/wgun.sh
 curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
 sed -i s[<pubkey>[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
-echo "Enter your endpoint domain or ip"
 read -p 'Enter your endpoint domain or ip: ' -e -i 'mydomainorpublicip.com' endpoint
 sed -i s[<ep>[$endpoint[ /config/WireGuardAIO/wgadd.sh
 read -p 'Enter DNS server(s): ' -e -i '1.1.1.1,1.0.0.1' wgdns
