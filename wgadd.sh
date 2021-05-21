@@ -1,4 +1,5 @@
 #!/bin/bash
+source /opt/vyatta/etc/functions/script-template
 # path for config file generation
 path=/config/WireGuardAIO
 # router public key
@@ -75,7 +76,6 @@ increment_ip()
 
 apply_config()
 {
-    source /opt/vyatta/etc/functions/script-template
     configure
     set interfaces wireguard "${interface}" peer "${pub}" allowed-ips "${routerip}"."${ipnum}"/32
     set interfaces wireguard "${interface}" peer "${pub}" persistent-keepalive 25
