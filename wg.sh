@@ -40,7 +40,7 @@ sudo apt-get update
 sudo apt-get install qrencode -y
 
 ## Prep the automatic peer configuration
-curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh?token=ABGY2QHBW7BJ2H7LE2FP2S3AU7H66 >> /config/WireGuardAIO/wgadd.sh
+curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
 sed -i s[<pubkey>[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
 echo "Enter your endpoint domain or ip"
