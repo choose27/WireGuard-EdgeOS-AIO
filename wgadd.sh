@@ -75,13 +75,14 @@ increment_ip()
 
 apply_config()
 {
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard "${interface}" peer "${pub}" allowed-ips "${routerip}"."${ipnum}"/32
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard "${interface}" peer "${pub}" persistent-keepalive 25
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard "${interface}" peer "${pub}" preshared-key "${psk}"
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard "${interface}" peer "${pub}" description "${peer_name}"
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
-    /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
+    source /opt/vyatta/etc/functions/script-template
+    configure
+    set interfaces wireguard "${interface}" peer "${pub}" allowed-ips "${routerip}"."${ipnum}"/32
+    set interfaces wireguard "${interface}" peer "${pub}" persistent-keepalive 25
+    set interfaces wireguard "${interface}" peer "${pub}" preshared-key "${psk}"
+    set interfaces wireguard "${interface}" peer "${pub}" description "${peer_name}"
+    commit save
+    exit
 }
 
 
