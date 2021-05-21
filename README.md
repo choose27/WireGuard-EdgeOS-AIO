@@ -14,7 +14,14 @@ How to use:
 7. add your first peer with ./wgadd.sh wg0 nameofpeer
 8. download wireguard app on ios/android
 9. scan qr code to add peer
+10. commit;save;exit
 
+I made a quick uninstaller so you can add/remove wg on demand. Or if you just want to remove it. Please review both scripts and understand them before you attempt to run them. ALWAYS make backups!
+
+Uninstall:
+1. configure
+2. ./wgun.sh #this is downloaded during installation to the same directory the installer was in.
+3. commit;save;exit
 
 Script to install wireguard is from:
 https://github.com/WireGuard/wireguard-vyatta-ubnt
