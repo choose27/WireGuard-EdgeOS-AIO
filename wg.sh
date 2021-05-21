@@ -46,11 +46,11 @@ chmod a+x /config/WireGuardAIO/wgun.sh
 ## Prep the automatic peer configuration
 curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
-sed -i s[<pubkey>[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
+sed -i s['<pubkey>'[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
 read -p 'Enter your endpoint domain or ip: ' -e -i 'mydomainorpublicip.com' endpoint
-sed -i s[<ep>[$endpoint[ /config/WireGuardAIO/wgadd.sh
+sed -i s['<ep>'[$endpoint[ /config/WireGuardAIO/wgadd.sh
 read -p 'Enter DNS server(s): ' -e -i '1.1.1.1,1.0.0.1' wgdns
-sed -i s[<dns>[$wgdns[ /config/WireGuardAIO/wgadd.sh
+sed -i s['<dns>'[$wgdns[ /config/WireGuardAIO/wgadd.sh
 chmod a+x /config/WireGuardAIO/wgadd.sh
 echo 2 >> /config/WireGuardAIO/nextip.txt
 echo "All done! Run '/config/WireGuardAIO/wgadd.sh wg0 peername' to generate a QR code for the app"
