@@ -3,7 +3,6 @@
 curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/master/wireguard.sh >> /config/WireGuardAIO/install.sh
 chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh remove
-wait
 ## Set up the Interface
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper delete interfaces wireguard
