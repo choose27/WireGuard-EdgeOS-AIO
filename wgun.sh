@@ -17,12 +17,7 @@ sudo apt-get update
 sudo apt-get install qrencode -y
 sudo dpkg --remove wireguard
 sudo dpkg --purge wireguard
-rm /config/WireGuardAIO/nextip.txt
-rm /config/WireGuardAIO/wg.public
-rm /config/WireGuardAIO/wgadd.sh
-rm /config/WireGuardAIO/install.sh
-rm /config/WireGuardAIO/*.peer
-rm /config/WireGuardAIO/*.conf
+rm -R /config/WireGuardAIO
 rm /config/auth/wg.key
 
 sudo apt remove qrencode -y
