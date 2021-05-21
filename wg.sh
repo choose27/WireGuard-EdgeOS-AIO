@@ -6,35 +6,24 @@ fi
 curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/master/wireguard.sh >> /config/WireGuardAIO/install.sh
 chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh install
-
-## Set up the Interface
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
-
-#### get qrencode
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch components 'main contrib non-free'
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch distribution stretch
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch url http://http.us.debian.org/debian
-#commit; save; exit
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
 ## Generate Keys
 wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.public
-
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard wg0 address 10.254.254.1/24
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard wg0 listen-port 51820
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard wg0 route-allowed-ips true
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard wg0 private-key /config/auth/wg.key
+## Set up the interface and get qrencode
+source /opt/vyatta/etc/functions/script-template
+configure
+set system package repository stretch components 'main contrib non-free'
+set system package repository stretch distribution stretch
+set system package repository stretch url http://http.us.debian.org/debian
+set interfaces wireguard wg0 address 10.254.254.1/24
+set interfaces wireguard wg0 listen-port 51820
+set interfaces wireguard wg0 route-allowed-ips true
+set interfaces wireguard wg0 private-key /config/auth/wg.key
 ### check wan local rules and change the number accordingly ###
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 action accept
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 description 'WireGuard'
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 destination port 51820
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 protocol udp
-
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
+set firewall name WAN_LOCAL rule 540 action accept
+set firewall name WAN_LOCAL rule 540 description 'WireGuard'
+set firewall name WAN_LOCAL rule 540 destination port 51820
+set firewall name WAN_LOCAL rule 540 protocol udp
+commit save
 
 sudo apt-get update
 sudo apt-get install qrencode -y
@@ -55,3 +44,4 @@ sed -i s['<dns>'[$wgdns[ /config/WireGuardAIO/wgadd.sh
 chmod a+x /config/WireGuardAIO/wgadd.sh
 echo 2 >> /config/WireGuardAIO/nextip.txt
 echo "All done! Run '/config/WireGuardAIO/wgadd.sh wg0 peername' to generate a QR code for the app"
+exit
