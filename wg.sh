@@ -27,10 +27,10 @@ wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.publi
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard wg0 route-allowed-ips true
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set interfaces wireguard wg0 private-key /config/auth/wg.key
 ### check wan local rules and change the number accordingly ###
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 40 action accept
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 40 description 'WireGuard'
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 40 destination port 51820
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 40 protocol udp
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 action accept
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 description 'WireGuard'
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 destination port 51820
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 protocol udp
 
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
