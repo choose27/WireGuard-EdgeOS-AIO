@@ -40,11 +40,11 @@ sudo apt-get update
 sudo apt-get install qrencode -y
 
 ## Grab uninstaller
-curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
+curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
 chmod a+x /config/WireGuardAIO/wgun.sh
 
 ## Prep the automatic peer configuration
-curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
+curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
 #using [ to split up my sed commands because I have not seen it in the public key output.
 sed -i s['<pubkey>'[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
