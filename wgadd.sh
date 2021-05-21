@@ -1,6 +1,6 @@
 #!/bin/bash
 # path for config file generation
-path=.
+path=/config/WireguardAIO
 # router public key
 routerpubkey=<pubkey>
 endpoint=<ep>
