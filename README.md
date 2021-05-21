@@ -1,4 +1,4 @@
-# Wireguard-EdgeOS-AIO
+# WireGuard-EdgeOS-AIO
 Collection of scripts to install Wireguard on Ubiquiti Edgerouter and easily add peers.
 
 How to use:
