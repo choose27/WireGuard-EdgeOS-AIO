@@ -6,7 +6,7 @@ chmod a+x /config/WireGuardAIO/install.sh
 ## Set up the Interface
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper delete interfaces wireguard
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper delete firewall name WAN_LOCAL rule 40
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper delete firewall name WAN_LOCAL rule 540
 #### get qrencode
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper delete system package repository
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
