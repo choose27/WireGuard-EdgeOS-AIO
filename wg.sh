@@ -46,6 +46,7 @@ chmod a+x /config/WireGuardAIO/wgun.sh
 ## Prep the automatic peer configuration
 curl https://raw.githubusercontent.com/choose27/Wireguard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
+#using [ to split up my sed commands because I have not seen it in the public key output.
 sed -i s['<pubkey>'[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
 read -p 'Enter your endpoint domain or ip: ' -e -i 'mydomainorpublicip.com' endpoint
 sed -i s['<ep>'[$endpoint[ /config/WireGuardAIO/wgadd.sh
