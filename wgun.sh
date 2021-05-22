@@ -32,4 +32,12 @@ rm /config/auth/wg.key
 ## Remove WireGuardAIO folder
 rm -R /config/WireGuardAIO
 
+## Remove symlinks
+if [ ! ./wgadd ]; then
+  rm ./wgadd
+fi
+if [ ! ./wgun ]; then
+  rm ./wgun
+fi
+
 
