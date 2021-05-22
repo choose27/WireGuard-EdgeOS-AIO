@@ -10,8 +10,6 @@ How to use:
 3. Add peers with: ./wgadd <wginterface> <peername> 
 
 Add Peer Example: ./wgadd wg0 myphone
-
-Script is removed automatically after installation.
   
 Uninstall:
 1. ./wg-uninstall
