@@ -1,4 +1,8 @@
 #!/bin/bash
+# make sure script is run as group vyattacfg
+if [ 'vyattacfg' != $(id -ng) ]; then
+ exec sg vyattacfg -c "$0 $@"
+fi
 # path for config file generation
 path=/config/WireGuardAIO
 # router public key
