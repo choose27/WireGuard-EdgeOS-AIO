@@ -67,4 +67,7 @@ echo 2 >> /config/WireGuardAIO/nextip.txt
 ln -s /config/WireGuardAIO/wgadd.sh wgadd
 ln -s /config/WireGuardAIO/wgun.sh wg-uninstall
 echo "All done! Run './wgadd wg0 peername' to generate a QR code for the app"
+if [ ! -f ./wg.sh ]; then
+  rm ./wg.sh
+fi
 exit
