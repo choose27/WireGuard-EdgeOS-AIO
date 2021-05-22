@@ -1,4 +1,8 @@
 #!/bin/sh
+# make sure script is run as group vyattacfg
+if [ 'vyattacfg' != $(id -ng) ]; then
+ exec sg vyattacfg -c "$0 $@"
+fi
 ## Remove WireGuard
 curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/master/wireguard.sh >> /config/WireGuardAIO/install.sh
 chmod a+x /config/WireGuardAIO/install.sh
