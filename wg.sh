@@ -29,7 +29,11 @@ $config set firewall name WAN_LOCAL rule 540 protocol udp
 $config set system package repository stretch components 'main contrib non-free'
 $config set system package repository stretch distribution stretch
 $config set system package repository stretch url http://http.us.debian.org/debian
+$config commit
+$config save
+$config end
 ## Add the interface
+$config begin
 $config set interfaces wireguard wg0 address 10.254.254.1/24
 $config set interfaces wireguard wg0 listen-port 51820
 $config set interfaces wireguard wg0 route-allowed-ips true
