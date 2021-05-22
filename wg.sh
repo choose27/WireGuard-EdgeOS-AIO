@@ -1,7 +1,7 @@
 #!/bin/sh
 # make sure script is run as group vyattacfg
-if [ 'vyattacfg' != $(id -ng) ]; then
- exec sg vyattacfg -c "$0 $@"
+if [[ $(id -g -n) != 'vyattacfg' ]]; then
+	exec sg vyattacfg -c "$0 $@"
 fi
 
 ## Create folder if needed
