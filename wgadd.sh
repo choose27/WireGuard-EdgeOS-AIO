@@ -1,7 +1,7 @@
 #!/bin/bash
 # make sure script is run as group vyattacfg
 if [[ $(id -g -n) != 'vyattacfg' ]]; then
-	exec sg vyattacfg -c "$0 $@"
+	exec sg vyattacfg -c "/bin/bash $(readlink -f "$0") $*"
 fi
 # path for config file generation
 path=/config/WireGuardAIO
