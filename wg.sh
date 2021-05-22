@@ -1,29 +1,36 @@
 #!/bin/sh
-## Install WireGuard
+## Create folder if needed
 if [ ! -d /config/WireGuardAIO ]; then
   mkdir -p /config/WireGuardAIO;
 fi
+
+## Install WireGuard from mafredri's script
 curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/master/wireguard.sh >> /config/WireGuardAIO/install.sh
 chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh install
-wait 10
+
 ## Generate Keys
 wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.public
-## Set up the interface and get qrencode
+
+## Add repo and WAN_LOCAL Rules
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch components 'main contrib non-free'
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch distribution stretch
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch url http://http.us.debian.org/debian
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 action accept
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 description 'WireGuard'
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 destination port 51820
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 protocol udp
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
+
+## Add the interface
 source /opt/vyatta/etc/functions/script-template
-configure
-set system package repository stretch components 'main contrib non-free'
-set system package repository stretch distribution stretch
-set system package repository stretch url http://http.us.debian.org/debian
 set interfaces wireguard wg0 address 10.254.254.1/24
 set interfaces wireguard wg0 listen-port 51820
 set interfaces wireguard wg0 route-allowed-ips true
 set interfaces wireguard wg0 private-key /config/auth/wg.key
-### check wan local rules and change the number accordingly ###
-set firewall name WAN_LOCAL rule 540 action accept
-set firewall name WAN_LOCAL rule 540 description 'WireGuard'
-set firewall name WAN_LOCAL rule 540 destination port 51820
-set firewall name WAN_LOCAL rule 540 protocol udp
 commit save
 
 ## Grab uninstaller
@@ -33,6 +40,7 @@ chmod a+x /config/WireGuardAIO/wgun.sh
 ## Prep the automatic peer configuration
 curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
+
 #using [ to split up my sed commands because I have not seen it in the public key output.
 sed -i s['<pubkey>'[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
 read -p 'Enter your endpoint domain or ip: ' -e -i 'mydomainorpublicip.com' endpoint
