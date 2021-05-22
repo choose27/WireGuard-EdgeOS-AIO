@@ -12,12 +12,12 @@ chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh remove
 
 ## Remove WAN_LOCAL rule
-config begin
-config delete firewall name WAN_LOCAL rule 540
-config delete system package repository
-config commit
-config save
-config end
+$config begin
+$config delete firewall name WAN_LOCAL rule 540
+$config delete system package repository
+$config commit
+$config save
+$config end
 
 ## Remove qrcode
 sudo apt remove qrencode -y
