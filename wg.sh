@@ -6,6 +6,7 @@ fi
 curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/master/wireguard.sh >> /config/WireGuardAIO/install.sh
 chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh install
+wait 10
 ## Generate Keys
 wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.public
 ## Set up the interface and get qrencode
@@ -18,16 +19,12 @@ set interfaces wireguard wg0 address 10.254.254.1/24
 set interfaces wireguard wg0 listen-port 51820
 set interfaces wireguard wg0 route-allowed-ips true
 set interfaces wireguard wg0 private-key /config/auth/wg.key
-commit save
 ### check wan local rules and change the number accordingly ###
 set firewall name WAN_LOCAL rule 540 action accept
 set firewall name WAN_LOCAL rule 540 description 'WireGuard'
 set firewall name WAN_LOCAL rule 540 destination port 51820
 set firewall name WAN_LOCAL rule 540 protocol udp
 commit save
-
-sudo apt-get update
-sudo apt-get install qrencode -y
 
 ## Grab uninstaller
 curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
