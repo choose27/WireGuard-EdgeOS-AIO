@@ -44,6 +44,10 @@ $config commit
 $config save
 $config end
 
+## Install qrencode
+sudo apt-get update
+sudo apt-get install qrencode -y
+
 ## Grab uninstaller
 curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
 chmod a+x /config/WireGuardAIO/wgun.sh
