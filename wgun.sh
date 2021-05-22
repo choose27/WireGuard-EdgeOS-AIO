@@ -33,10 +33,10 @@ rm /config/auth/wg.key
 rm -R /config/WireGuardAIO
 
 ## Remove symlinks
-if [ ! ./wgadd ]; then
+if [ ! -f ./wgadd ]; then
   rm ./wgadd
 fi
-if [ ! ./wgun ]; then
+if [ ! -f ./wgun ]; then
   rm ./wgun
 fi
 
