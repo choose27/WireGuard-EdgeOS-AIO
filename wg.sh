@@ -9,44 +9,34 @@ if [ ! -d /config/WireGuardAIO ]; then
   mkdir -p /config/WireGuardAIO;
 fi
 
+config=/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper
+
 ## Install WireGuard from mafredri's script
 curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/master/wireguard.sh >> /config/WireGuardAIO/install.sh
 chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh install
 
-## Add WAN_LOCAL rule
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 action accept
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 description 'WireGuard'
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 destination port 51820
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 protocol udp
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
-
 ## Generate Keys
 wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.public
 
+## Add WAN_LOCAL rule
+config begin
+config set firewall name WAN_LOCAL rule 540 action accept
+config set firewall name WAN_LOCAL rule 540 description 'WireGuard'
+config set firewall name WAN_LOCAL rule 540 destination port 51820
+config set firewall name WAN_LOCAL rule 540 protocol udp
 ## Add repo and WAN_LOCAL Rules
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch components 'main contrib non-free'
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch distribution stretch
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch url http://http.us.debian.org/debian
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
-
-## Install qrencode
-sudo apt-get update
-sudo apt-get install qrencode -y
-
+config set system package repository stretch components 'main contrib non-free'
+config set system package repository stretch distribution stretch
+config set system package repository stretch url http://http.us.debian.org/debian
 ## Add the interface
-source /opt/vyatta/etc/functions/script-template
-set interfaces wireguard wg0 address 10.254.254.1/24
-set interfaces wireguard wg0 listen-port 51820
-set interfaces wireguard wg0 route-allowed-ips true
-set interfaces wireguard wg0 private-key /config/auth/wg.key
-commit save
+config set interfaces wireguard wg0 address 10.254.254.1/24
+config set interfaces wireguard wg0 listen-port 51820
+config set interfaces wireguard wg0 route-allowed-ips true
+config set interfaces wireguard wg0 private-key /config/auth/wg.key
+config commit
+config save
+config end
 
 ## Grab uninstaller
 curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
