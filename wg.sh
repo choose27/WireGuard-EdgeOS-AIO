@@ -17,13 +17,13 @@ wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.publi
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch components 'main contrib non-free'
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch distribution stretch
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set system package repository stretch url http://http.us.debian.org/debian
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 action accept
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 description 'WireGuard'
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 destination port 51820
-/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 protocol udp
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
 /opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
+
+## Install qrencode
+sudo apt-get update
+sudo apt-get install qrencode -y
 
 ## Add the interface
 source /opt/vyatta/etc/functions/script-template
@@ -32,6 +32,16 @@ set interfaces wireguard wg0 listen-port 51820
 set interfaces wireguard wg0 route-allowed-ips true
 set interfaces wireguard wg0 private-key /config/auth/wg.key
 commit save
+
+## Add WAN_LOCAL rule
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper begin
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 action accept
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 description 'WireGuard'
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 destination port 51820
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper set firewall name WAN_LOCAL rule 540 protocol udp
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper commit
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper save
+/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper end
 
 ## Grab uninstaller
 curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgun.sh >> /config/WireGuardAIO/wgun.sh
