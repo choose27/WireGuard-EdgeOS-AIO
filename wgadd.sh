@@ -1,5 +1,4 @@
 #!/bin/bash
-source /opt/vyatta/etc/functions/script-template
 # path for config file generation
 path=/config/WireGuardAIO
 # router public key
@@ -82,7 +81,6 @@ apply_config()
     set interfaces wireguard "${interface}" peer "${pub}" preshared-key "${psk}"
     set interfaces wireguard "${interface}" peer "${pub}" description "${peer_name}"
     commit save
-    exit
 }
 
 
@@ -142,6 +140,7 @@ main()
         increment_ip
 
         # Sets the new config 
+        source /opt/vyatta/etc/functions/script-template
         apply_config
 
         # Displays the new peer file, copy/paste for import if desired 
