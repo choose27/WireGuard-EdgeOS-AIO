@@ -18,6 +18,7 @@ set interfaces wireguard wg0 address 10.254.254.1/24
 set interfaces wireguard wg0 listen-port 51820
 set interfaces wireguard wg0 route-allowed-ips true
 set interfaces wireguard wg0 private-key /config/auth/wg.key
+commit save
 ### check wan local rules and change the number accordingly ###
 set firewall name WAN_LOCAL rule 540 action accept
 set firewall name WAN_LOCAL rule 540 description 'WireGuard'
