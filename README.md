@@ -23,4 +23,3 @@ https://github.com/WireGuard/wireguard-vyatta-ubnt
 
 Script to add peers is from this reddit post:
 https://www.reddit.com/r/WireGuard/comments/fxcqaa/script_automate_adding_wireguard_peers_on/
-I only made a few adjustments to automate adding peers.
