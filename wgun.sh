@@ -23,9 +23,10 @@ sudo apt autoremove -y
 ## Clean up space
 sudo apt autoclean
 
+## Remove key
+rm /config/auth/wg.key
+
 ## Remove WireGuardAIO folder
 rm -R /config/WireGuardAIO
 
-## Remove key
-rm /config/auth/wg.key
 
