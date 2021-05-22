@@ -36,6 +36,9 @@ rm -R /config/WireGuardAIO
 if [ ! -f ./wgadd ]; then
   rm ./wgadd
 fi
+if [ ! -f ./wg-uninstall ]; then
+  rm ./wg-uninstall
+fi
 if [ ! -f ./wgun ]; then
   rm ./wgun
 fi
