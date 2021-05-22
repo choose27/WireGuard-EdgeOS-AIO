@@ -64,5 +64,7 @@ read -p 'Enter DNS server(s): ' -e -i '1.1.1.1,1.0.0.1' wgdns
 sed -i s['<dns>'[$wgdns[ /config/WireGuardAIO/wgadd.sh
 chmod a+x /config/WireGuardAIO/wgadd.sh
 echo 2 >> /config/WireGuardAIO/nextip.txt
-echo "All done! Run '/config/WireGuardAIO/wgadd.sh wg0 peername' to generate a QR code for the app"
+ln -s /config/WireGuardAIO/wgadd.sh wgadd
+ln -s /config/WireGuardAIO/wgun.sh wg-uninstall
+echo "All done! Run './wgadd wg0 peername' to generate a QR code for the app"
 exit
