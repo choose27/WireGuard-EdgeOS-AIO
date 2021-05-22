@@ -16,8 +16,6 @@ curl https://raw.githubusercontent.com/mafredri/vyatta-wireguard-installer/maste
 chmod a+x /config/WireGuardAIO/install.sh
 /bin/bash /config/WireGuardAIO/install.sh install
 
-## Generate Keys
-wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.public
 
 ## Add WAN_LOCAL rule
 $config begin
@@ -32,6 +30,10 @@ $config set system package repository stretch url http://http.us.debian.org/debi
 $config commit
 $config save
 $config end
+
+## Generate Keys
+wg genkey | tee /config/auth/wg.key | wg pubkey >  /config/WireGuardAIO/wg.public
+
 ## Add the interface
 $config begin
 $config set interfaces wireguard wg0 address 10.254.254.1/24
