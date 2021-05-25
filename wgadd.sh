@@ -21,7 +21,8 @@ fi
 peer_name="${2}"
 interface="${1}"
 routerip=$(/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper show interfaces wireguard "${interface}" address | awk '{print $2}' | sed 's@/.*@@' | cut -d"." -f1-3)
-dns=<dns>
+dns=$(/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper show interfaces wireguard "${interface}" address | awk '{print $2}' | sed 's@/.*@@')
+#dns=<dns>
 port=$(/opt/vyatta/sbin/vyatta-cfg-cmd-wrapper show interfaces wireguard "${interface}" listen-port | awk '{print $2}')
 
 pre_checks()
