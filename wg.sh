@@ -61,9 +61,11 @@ chmod a+x /config/WireGuardAIO/wgun.sh
 curl https://raw.githubusercontent.com/choose27/WireGuard-EdgeOS-AIO/main/wgadd.sh >> /config/WireGuardAIO/wgadd.sh
 routerpubkey=$(cat /config/WireGuardAIO/wg.public)
 
+## Get Public Key so we don't have to look it up
+publicip=$(curl ifconfig.me)
 #using [ to split up my sed commands because I have not seen it in the public key output.
 sed -i s['<pubkey>'[$routerpubkey[ /config/WireGuardAIO/wgadd.sh
-read -p 'Enter your endpoint domain or ip: ' -e -i 'mydomainorpublicip.com' endpoint
+read -p 'Enter your endpoint domain or ip: ' -e -i $publicip endpoint
 sed -i s['<ep>'[$endpoint[ /config/WireGuardAIO/wgadd.sh
 #read -p 'Enter DNS server(s): ' -e -i '1.1.1.1,1.0.0.1' wgdns
 #sed -i s['<dns>'[$wgdns[ /config/WireGuardAIO/wgadd.sh
