@@ -45,4 +45,4 @@ fi
 if [ ! -f ./wg.sh ]; then
   rm ./wg.sh
 fi
-
+exit
