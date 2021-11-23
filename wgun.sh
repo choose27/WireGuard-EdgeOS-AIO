@@ -39,8 +39,3 @@ fi
 if [ ! -f ./wg-uninstall ]; then
   rm ./wg-uninstall
 fi
-## Remove install script
-if [ ! -f ./wg.sh ]; then
-  rm ./wg.sh
-fi
-exit
