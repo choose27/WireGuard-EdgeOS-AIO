@@ -39,9 +39,7 @@ fi
 if [ ! -f ./wg-uninstall ]; then
   rm ./wg-uninstall
 fi
-if [ ! -f ./wgun ]; then
-  rm ./wgun
-fi
+## Remove install script
 if [ ! -f ./wg.sh ]; then
   rm ./wg.sh
 fi
