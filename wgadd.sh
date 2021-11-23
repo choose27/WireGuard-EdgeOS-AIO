@@ -9,7 +9,6 @@ path=/config/WireGuardAIO
 routerpubkey=<pubkey>
 endpoint=<ep>
 allowedips=0.0.0.0/0
-publicip=$(curl ifconfig.me)
 myname=$(basename "${0}")
 
 if test $# != 2
