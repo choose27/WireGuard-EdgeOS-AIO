@@ -42,5 +42,7 @@ fi
 if [ ! -f ./wgun ]; then
   rm ./wgun
 fi
-
+if [ ! -f ./wg.sh ]; then
+  rm ./wg.sh
+fi
 
